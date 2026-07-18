@@ -68,7 +68,7 @@ variableInicializada: IDENTIFIER (ASSIGN expresion)? ;
 bloque: LBRACE sentencia* RBRACE ;
 
 // Sentencias aceptadas
-sentencia: declaracionVariable
+sentencia: declaracionVariable SEMICOLON
     | asignacion SEMICOLON
     | llamadaMetodo SEMICOLON
     | sentenciaIf
