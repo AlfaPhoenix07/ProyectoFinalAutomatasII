@@ -20,7 +20,7 @@ if archivo_subido is not None:
     # Botón para detonar el análisis
     if st.button("Analizar Código", type="primary"):
         with st.spinner("Analizando..."):
-            # Aquí ocurre la magia: llamamos a tu helper
+            # Llamamos al helper
             resultado = analizar_codigo(codigo_fuente)
             
             st.subheader("Resultado del Análisis:")
