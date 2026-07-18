@@ -2,10 +2,10 @@ import streamlit as st
 # Importamos la función en el helper_compilador.py que inyectamos en este archivo para que se ejecute el análisis léxico y sintáctico
 from helper_compilador import analizar_codigo
 
-st.set_page_config(page_title="Analizador Java", page_icon="☕")
+st.set_page_config(page_title="Analizador Java", page_icon="")
 
 st.title("Analizador Léxico y Sintáctico de Java")
-st.markdown("Sube tu archivo `.java` para comprobar si cumple con los requerimientos del proyecto.")
+st.markdown("Sube tu archivo `.java` para analizarlo lexica y sintácticamente.")
 
 # El componente para subir el archivo
 archivo_subido = st.file_uploader("Sube un archivo .java", type=["java"])
