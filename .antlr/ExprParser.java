@@ -16,24 +16,67 @@ public class ExprParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		NUM=1, IDF=2, WS=3;
+		ABSTRACT=1, ASSERT=2, BOOLEAN=3, BREAK=4, BYTE=5, CASE=6, CATCH=7, CHAR=8, 
+		CLASS=9, CONST=10, CONTINUE=11, DEFAULT=12, DO=13, DOUBLE=14, ELSE=15, 
+		ENUM=16, EXTENDS=17, FINAL=18, FINALLY=19, FLOAT=20, FOR=21, IF=22, GOTO=23, 
+		IMPLEMENTS=24, IMPORT=25, INSTANCEOF=26, INT=27, INTERFACE=28, LONG=29, 
+		NATIVE=30, NEW=31, PACKAGE=32, PRIVATE=33, PROTECTED=34, PUBLIC=35, RETURN=36, 
+		SHORT=37, STATIC=38, STRICTFP=39, SUPER=40, SWITCH=41, SYNCHRONIZED=42, 
+		THIS=43, THROW=44, THROWS=45, TRANSIENT=46, TRY=47, VOID=48, VOLATILE=49, 
+		WHILE=50, RECORD=51, SEALED=52, PERMITS=53, NON_SEALED=54, TRUE=55, FALSE=56, 
+		NULL=57, INTEGER_LITERAL=58, FLOAT_LITERAL=59, CHAR_LITERAL=60, STRING_LITERAL=61, 
+		IDENTIFIER=62, PLUS=63, MINUS=64, MULT=65, DIV=66, MOD=67, INC=68, DEC=69, 
+		ASSIGN=70, ADD_ASSIGN=71, SUB_ASSIGN=72, MUL_ASSIGN=73, DIV_ASSIGN=74, 
+		MOD_ASSIGN=75, EQUAL=76, NOTEQUAL=77, GT=78, LT=79, GE=80, LE=81, AND=82, 
+		OR=83, NOT=84, BIT_AND=85, BIT_OR=86, BIT_XOR=87, BIT_NOT=88, LSHIFT=89, 
+		RSHIFT=90, URSHIFT=91, QUESTION=92, COLON=93, LPAREN=94, RPAREN=95, LBRACE=96, 
+		RBRACE=97, LBRACK=98, RBRACK=99, SEMICOLON=100, COMMA=101, DOT=102, AT=103, 
+		ELLIPSIS=104, LINE_COMMENT=105, BLOCK_COMMENT=106, WS=107;
 	public static final int
-		RULE_root = 0, RULE_expr = 1;
+		RULE_program = 0;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"root", "expr"
+			"program"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
+			null, "'abstract'", "'assert'", "'boolean'", "'break'", "'byte'", "'case'", 
+			"'catch'", "'char'", "'class'", "'const'", "'continue'", "'default'", 
+			"'do'", "'double'", "'else'", "'enum'", "'extends'", "'final'", "'finally'", 
+			"'float'", "'for'", "'if'", "'goto'", "'implements'", "'import'", "'instanceof'", 
+			"'int'", "'interface'", "'long'", "'native'", "'new'", "'package'", "'private'", 
+			"'protected'", "'public'", "'return'", "'short'", "'static'", "'strictfp'", 
+			"'super'", "'switch'", "'synchronized'", "'this'", "'throw'", "'throws'", 
+			"'transient'", "'try'", "'void'", "'volatile'", "'while'", "'record'", 
+			"'sealed'", "'permits'", "'non-sealed'", "'true'", "'false'", "'null'", 
+			null, null, null, null, null, "'+'", "'-'", "'*'", "'/'", "'%'", "'++'", 
+			"'--'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'=='", "'!='", 
+			"'>'", "'<'", "'>='", "'<='", "'&&'", "'||'", "'!'", "'&'", "'|'", "'^'", 
+			"'~'", "'<<'", "'>>'", "'>>>'", "'?'", "':'", "'('", "')'", "'{'", "'}'", 
+			"'['", "']'", "';'", "','", "'.'", "'@'", "'...'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "NUM", "IDF", "WS"
+			null, "ABSTRACT", "ASSERT", "BOOLEAN", "BREAK", "BYTE", "CASE", "CATCH", 
+			"CHAR", "CLASS", "CONST", "CONTINUE", "DEFAULT", "DO", "DOUBLE", "ELSE", 
+			"ENUM", "EXTENDS", "FINAL", "FINALLY", "FLOAT", "FOR", "IF", "GOTO", 
+			"IMPLEMENTS", "IMPORT", "INSTANCEOF", "INT", "INTERFACE", "LONG", "NATIVE", 
+			"NEW", "PACKAGE", "PRIVATE", "PROTECTED", "PUBLIC", "RETURN", "SHORT", 
+			"STATIC", "STRICTFP", "SUPER", "SWITCH", "SYNCHRONIZED", "THIS", "THROW", 
+			"THROWS", "TRANSIENT", "TRY", "VOID", "VOLATILE", "WHILE", "RECORD", 
+			"SEALED", "PERMITS", "NON_SEALED", "TRUE", "FALSE", "NULL", "INTEGER_LITERAL", 
+			"FLOAT_LITERAL", "CHAR_LITERAL", "STRING_LITERAL", "IDENTIFIER", "PLUS", 
+			"MINUS", "MULT", "DIV", "MOD", "INC", "DEC", "ASSIGN", "ADD_ASSIGN", 
+			"SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN", "MOD_ASSIGN", "EQUAL", "NOTEQUAL", 
+			"GT", "LT", "GE", "LE", "AND", "OR", "NOT", "BIT_AND", "BIT_OR", "BIT_XOR", 
+			"BIT_NOT", "LSHIFT", "RSHIFT", "URSHIFT", "QUESTION", "COLON", "LPAREN", 
+			"RPAREN", "LBRACE", "RBRACE", "LBRACK", "RBRACK", "SEMICOLON", "COMMA", 
+			"DOT", "AT", "ELLIPSIS", "LINE_COMMENT", "BLOCK_COMMENT", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -88,26 +131,21 @@ public class ExprParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class RootContext extends ParserRuleContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
+	public static class ProgramContext extends ParserRuleContext {
 		public TerminalNode EOF() { return getToken(ExprParser.EOF, 0); }
-		public RootContext(ParserRuleContext parent, int invokingState) {
+		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_root; }
+		@Override public int getRuleIndex() { return RULE_program; }
 	}
 
-	public final RootContext root() throws RecognitionException {
-		RootContext _localctx = new RootContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_root);
+	public final ProgramContext program() throws RecognitionException {
+		ProgramContext _localctx = new ProgramContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_program);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(4);
-			expr();
-			setState(5);
+			setState(2);
 			match(EOF);
 			}
 		}
@@ -122,54 +160,11 @@ public class ExprParser extends Parser {
 		return _localctx;
 	}
 
-	@SuppressWarnings("CheckReturnValue")
-	public static class ExprContext extends ParserRuleContext {
-		public TerminalNode NUM() { return getToken(ExprParser.NUM, 0); }
-		public TerminalNode IDF() { return getToken(ExprParser.IDF, 0); }
-		public ExprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expr; }
-	}
-
-	public final ExprContext expr() throws RecognitionException {
-		ExprContext _localctx = new ExprContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_expr);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(7);
-			_la = _input.LA(1);
-			if ( !(_la==NUM || _la==IDF) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
 	public static final String _serializedATN =
-		"\u0004\u0001\u0003\n\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0001"+
-		"\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0000"+
-		"\u0000\u0002\u0000\u0002\u0000\u0001\u0001\u0000\u0001\u0002\u0007\u0000"+
-		"\u0004\u0001\u0000\u0000\u0000\u0002\u0007\u0001\u0000\u0000\u0000\u0004"+
-		"\u0005\u0003\u0002\u0001\u0000\u0005\u0006\u0005\u0000\u0000\u0001\u0006"+
-		"\u0001\u0001\u0000\u0000\u0000\u0007\b\u0007\u0000\u0000\u0000\b\u0003"+
-		"\u0001\u0000\u0000\u0000\u0000";
+		"\u0004\u0001k\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000\u0001"+
+		"\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0003\u0000\u0002\u0001\u0000"+
+		"\u0000\u0000\u0002\u0003\u0005\u0000\u0000\u0001\u0003\u0001\u0001\u0000"+
+		"\u0000\u0000\u0000";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
