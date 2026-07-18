@@ -20,7 +20,7 @@ def analizar_codigo(codigo_fuente):
         
         # Le decimos al parser que empiece a leer desde la regla principal.
         # NOTA: Asegúrare de que la primera regla se llame 'program'
-        tree = parser.program() 
+        tree = parser.programa() 
         
         # Por ahora, solo devolvemos el árbol en formato de texto para ver si funciona
         return tree.toStringTree(recog=parser)
