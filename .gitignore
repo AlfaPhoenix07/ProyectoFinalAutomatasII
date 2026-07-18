@@ -1,0 +1,24 @@
+# Entorno virtual
+.venv/
+venv/
+
+# Caché de Python
+_pycache_/
+*.py[cod]
+
+# Archivos generados por ANTLR
+*.interp
+*.tokens
+ExprLexer.py
+ExprParser.py
+ExprLexer.java
+ExprParser.java
+.antlr/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Sistema operativo y VS Code
+.vscode/
+.DS_Store
+Thumbs.db
